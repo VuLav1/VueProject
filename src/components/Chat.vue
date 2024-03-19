@@ -2,7 +2,7 @@
     <div>
         <h2>Chat View</h2>
         <h2>Xin chào {{ username }}</h2>
-        <ul>ss
+        <ul>
             <li v-for="msg in messages" :key="msg">
                 <span>{{ msg.username }}: </span>
                 <span>{{ msg.message }}</span>
