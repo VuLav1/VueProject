@@ -8,7 +8,7 @@
           <th>Tên khách hàng</th>
           <th>Tên sản phẩm</th>
           <th>Trạng thái đơn hàng</th>
-          <th>Phương thức thanh toán</th>
+          <th>Phương thức thanh toán 111111111111</th>
           <th></th>
         </tr>
       </thead>
