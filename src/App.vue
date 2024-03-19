@@ -8,6 +8,8 @@
     >
     <router-link class="sidebar-menu" active-class="active" to="/chatview">ChatView</router-link>
     <router-link class="sidebar-menu" active-class="active" to="/products">Products</router-link>
+    <router-link class="sidebar-menu" active-class="active" to="/cart">Cart</router-link>
+
     <button class="login" @click="$store.dispatch('logout')">Logout</button>
   </nav>
   <div class="left-sidebar" id="app">

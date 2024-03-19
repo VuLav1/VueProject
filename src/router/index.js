@@ -6,7 +6,8 @@ import ManageOrderView from '../views/ManageOrderView.vue'
 import OrderDetailView from '../views/OrderDetailView.vue'
 import LoginChatView from '../views/LoginChatView'
 import Products from '../views/ProductsView.vue'
-
+import ProductDetail from '../views/ProductDetail.vue'
+import CartView from '../views/CartView.vue'
 const routes = [
   {
     path: '/',
@@ -41,6 +42,14 @@ const routes = [
     }
   },
   {
+    path: '/productdetail/:id',
+    name: 'ProductDetail',
+    component: ProductDetail,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login
@@ -49,6 +58,12 @@ const routes = [
     path: '/chatview',
     name: 'chatview',
     component: LoginChatView,
+   
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: CartView,
    
   },
 ]

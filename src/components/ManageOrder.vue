@@ -7,9 +7,7 @@
     <table class="order-table mb-3">
       <thead>
         <tr>
-          <th>Hình ảnh</th>
           <th>Mã đơn hàng</th>
-          <th>Ngày đặt hàng</th>
           <th>Tên khách hàng</th>
           <th>Địa chỉ giao hàng</th>
           <th>Tên sản phẩm</th>
@@ -23,21 +21,24 @@
       </thead>
       <tbody>
         <tr v-for="order in orders" :key="order.id" class="order-item">
+          <td>{{ order.id }}</td>
+          <td>{{ order.buyerInfo.name }}</td>
+          <td>{{ order.buyerInfo.address }}</td>
           <td>
-            <img
-              v-if="order.imageUrl"
-              :src="require('@/assets/' + order.imageUrl)"
-              alt="Product Image"
-              style="width: 50px; height: 50px"
-            />
+            <ul>
+              <li v-for="item in order.items" :key="item.id">
+                <img
+                  v-if="item.image"
+                  :src="require('@/assets/' + item.image)"
+                  alt="Product Image"
+                  style="width: 50px; height: 50px"
+                />
+                {{ item.name }}
+              </li>
+            </ul>
           </td>
-          <td>{{ order.orderId }}</td>
-          <td>{{ order.orderDate }}</td>
-          <td>{{ order.customerName }}</td>
-          <td>{{ order.shippingAddress }}</td>
-          <td>{{ order.productName }}</td>
-          <td>{{ order.quantity }}</td>
-          <td>{{ order.price }}</td>
+          <td  v-for="item in order.items" :key="item.id">{{ item.quantity }}</td>
+          <td>{{ order.items.price }}</td>
           <td>{{ order.productDescription }}</td>
           <td>{{ order.orderStatus }}</td>
           <td>{{ order.paymentMethod }}</td>
@@ -210,7 +211,7 @@ export default {
       imageUrl: "",
     });
     const editingOrder = ref(null);
-    
+
     onMounted(async () => {
       let orderCollection = await getDocs(collection(db, "orders"));
       orders.value = orderCollection.docs.map((order) => ({
@@ -232,8 +233,6 @@ export default {
     const editOrder = (order) => {
       editingOrder.value = { ...order };
     };
-
-
 
     const updateOrder = async () => {
       try {
@@ -297,6 +296,10 @@ export default {
 };
 </script>
 <style scoped>
+ul{
+  list-style-type: none;
+  padding: 0;
+}
 .container {
   max-width: 100%;
   margin: 0 auto;

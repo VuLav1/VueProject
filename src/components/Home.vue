@@ -7,18 +7,16 @@
           <th>Mã đơn hàng</th>
           <th>Tên khách hàng</th>
           <th>Tên sản phẩm</th>
-          <th>Trạng thái đơn hàng</th>
-          <th>Phương thức thanh toán 111111111111</th>
+          <th>Phương thức thanh toán</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="order in orders" :key="order.id">
-          <td>{{ order.orderId }}</td>
-          <td>{{ order.customerName }}</td>
-          <td>{{ order.productName }}</td>
-          <td>{{ order.orderStatus }}</td>
-          <td>{{ order.paymentMethod }}</td>
+          <td>{{ order.id }}</td>
+          <td>{{ order.buyerInfo.name }}</td>
+          <td ><span v-for="item in order.items" :key="item.id">{{ item.name + ',' }}</span></td>
+          <td>{{ order.buyerInfo.payment }}</td>
           <td @click="viewOrderDetail(order.id)"><span class="badge text-bg-primary"><i class="bi bi-printer"></i></span></td>
         </tr>
       </tbody>
