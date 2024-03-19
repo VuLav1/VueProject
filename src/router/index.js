@@ -1,25 +1,74 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Login from '../views/LoginForm.vue'
+import { auth } from '../firebase'
+import Home from '../views/HomeView.vue'
+import ManageOrderView from '../views/ManageOrderView.vue'
+import OrderDetailView from '../views/OrderDetailView.vue'
+import LoginChatView from '../views/LoginChatView'
+import Products from '../views/ProductsView.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'TrangChu',
+    component: Home,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    path: '/add',
+    name: 'add',
+    component: ManageOrderView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/order/:id', // Đường dẫn tới trang chi tiết đơn hàng với một tham số id
+    name: 'OrderDetail',
+    component: OrderDetailView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/products',
+    name: 'Products',
+    component: Products,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/chatview',
+    name: 'chatview',
+    component: LoginChatView,
+   
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login' && auth.currentUser) {
+    next('/')
+    return;
+  }
+
+  if (to.matched.some(record => record.meta.requiresAuth) && !auth.currentUser) {
+    next('/login')
+    return;
+  }
+  next();
 })
 
 export default router
